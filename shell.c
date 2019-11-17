@@ -9,94 +9,127 @@ extern FILE *stdin;
 extern FILE *stdout;
 #define UNUSED(argc)(void)(argc)
 
-const char *getUserCommand(char *command);
+char **ParseCommand(char *command, char *separator);
+void _prompt(void);
 
-int main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 
 	size_t sizebuf;
 	char *command = NULL;
+	char **param;
 	int ex;
 	pid_t pid;
-	char *param[] = {"/bin/ls","-l",".",NULL};
-	char *s;
-	int i = 0;
+
 	UNUSED(argc);
 	UNUSED(argv);
-	
 
-	printf("Proceso que comienza %d\n",getpid());
-
-	printf("estoy en el padre,%s\n",command);
-	putchar('{');
-	putchar('$');
-	putchar('}');
 	command = NULL;
+	_prompt();
 
-	while(getline(&command, &sizebuf, stdin) != EOF) 
+	while (getline(&command, &sizebuf, stdin) != EOF)
 	{
-		putchar('{');
-		putchar('$');
-		putchar('}');
 
 		pid = fork();
-		printf("Procesos Child=[%d] - Father=[%d]\n", pid,getpid());
 
-		if( pid > 0)
+		if (pid > 0)
 		{
 			wait(NULL);
-			putchar('{');
-			putchar('$');
-			putchar('}');
-			continue;
 		}
 		else if (pid == 0)
 		{
-			i = 0;
 
-			printf("estoy en el hijo loope,%s\n",*argv);
+			param = ParseCommand(command, " ");
 
-			s = strtok(command," ");
-			s[(strlen(s)-1)]=='\n'? s[(strlen(s)-1)]='\0':(s[(strlen(s)-1)]=s[(strlen(s)-1)]);
-			param[i] = s;
-			printf("param[%d]=%s\n", i,param[i]);
-			i++;
 
-			while ((s = strtok(NULL," ")))
-			{
-				param[i] = s;
-				printf("param[%d]=%s-strlen=%lu\n", i,param[i],strlen(s));
-				i++;
-
-			}
-			while (param[i] != NULL)
-			{
-				printf("param ult[%d],[%s]\n", i,param[i]);
-				i++;
-			}
-
-			printf("-------------------------\n");
-
-			ex = execve(param[0],param,NULL);
+			ex = execve(param[0], param, NULL);
 
 			if (ex == -1)
+			{
 				perror("Error execve\n");
+				exit(0);
+			}
 
 		}
-		if (pid == -1 )
+		if (pid == -1)
 		{
 			perror("Error fork");
 
 		}
-		
+
+		_prompt();
+
 	}
 
 	return (0);
 }
 
-const char *getUserCommand(char *command)
+char **ParseCommand(char *command, char *separator)
 {
-	char *comm;
-	comm = command;
-	return(strtok(comm," "));
+	unsigned int i = 0;
+	unsigned int Qword = 0;
+	size_t len = 0;
+	char **param;
+	char *s;
+
+	i = 0;
+	Qword = 0;
+
+	len = strlen(command);
+
+	for (i = 0; i < len; i++)
+	{
+		if (command[i] == *separator)
+			Qword++;
+	}
+
+	Qword != 1 ? Qword++ : (Qword = 1);
+
+	param = (char **) malloc(sizeof(char *));
+
+	if (param == NULL)
+	{
+		return (NULL);
+	}
+
+	for (i = 0; i < Qword + 1; i++)
+	{
+		param[i] = (char *) malloc(sizeof(char *));
+		if (param[i] == NULL)
+		{
+			free(param);
+			return (NULL);
+		}
+	}
+
+
+	i = 0;
+
+	s = strtok(command, separator);
+
+	len = strlen(s);
+
+	s[len - 1] == '\n' ? s[len - 1] = '\0' : (s[len - 1] = s[len - 1]);
+
+	param[i] = s;
+	i++;
+
+	while ((s = strtok(NULL, separator)))
+	{
+		param[i] = s;
+		len = strlen(s);
+		s[len - 1] == '\n' ? s[len - 1] = '\0' : (s[len - 1] = s[len - 1]);
+		i++;
+	}
+	param[i] = NULL;
+
+	return (param);
+
+}
+void _prompt(void)
+{
+	putchar('[');
+	putchar('$');
+	putchar(']');
+
 }
