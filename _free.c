@@ -1,3 +1,9 @@
+#include "shell.h"
+/**
+ * _free - free parsed command
+ * @param:  parsed command
+ * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
+ **/
 void _free(char **param)
 {
 	int i = 0;
