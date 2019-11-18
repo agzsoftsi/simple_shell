@@ -18,6 +18,7 @@ void _free(char **param);
 int main(int argc, char *argv[])
 {
 
+
 	if (argc == 1)
 		intoHsh();
 	else
@@ -34,7 +35,9 @@ void intoHsh(void)
 	pid_t pid;
 
 	command = NULL;
-	_prompt();
+
+	if (isatty(fileno(stdin)))
+		_prompt();
 
 	while (getline(&command, &sizebuf, stdin) != EOF)
 	{
@@ -58,9 +61,11 @@ void intoHsh(void)
 			perror("Error fork");
 
 		}
-		_prompt();
+		if (isatty(fileno(stdin)))
+			_prompt();
 	}
-	printf("Done!\n");
+	if (isatty(fileno(stdin)))
+		printf("Done!\n");
 }
 
 char **ParseCommand(char *command, char *separator)
@@ -153,9 +158,9 @@ void _free(char **param)
 	int i = 0;
 
 	printf("LIBERANDO\n");
-	for (i = 0;*(param+i) != NULL; i++)
+	for (i = 0; *(param + i) != NULL; i++)
 	{
-		printf("LIBERANDO %d\n",i);
+		printf("LIBERANDO %d\n", i);
 		free(param[i]);
 	}
 	free(param);
