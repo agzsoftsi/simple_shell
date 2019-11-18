@@ -9,20 +9,29 @@ extern FILE *stdin;
 extern FILE *stdout;
 #define UNUSED(argc)(void)(argc)
 
+void intoHsh(void);
 char **ParseCommand(char *command, char *separator);
 void _prompt(void);
+void _exec(char **param);
 
 int main(int argc, char *argv[])
 {
 
+	if (argc == 1)
+		intoHsh();
+	else
+		_exec(++argv);
+
+
+	return (0);
+}
+
+void intoHsh(void)
+{
 	size_t sizebuf;
 	char *command = NULL;
 	char **param;
-	int ex;
 	pid_t pid;
-
-	UNUSED(argc);
-	UNUSED(argv);
 
 	command = NULL;
 	_prompt();
@@ -41,14 +50,7 @@ int main(int argc, char *argv[])
 
 			param = ParseCommand(command, " ");
 
-
-			ex = execve(param[0], param, NULL);
-
-			if (ex == -1)
-			{
-				perror("Error execve\n");
-				exit(0);
-			}
+			_exec(param);
 
 		}
 		if (pid == -1)
@@ -58,10 +60,7 @@ int main(int argc, char *argv[])
 		}
 
 		_prompt();
-
 	}
-
-	return (0);
 }
 
 char **ParseCommand(char *command, char *separator)
@@ -71,6 +70,9 @@ char **ParseCommand(char *command, char *separator)
 	size_t len = 0;
 	char **param;
 	char *s;
+
+	if (strcmp(command, "exit\n") == 0)
+		_exit(-1);
 
 	i = 0;
 	Qword = 0;
@@ -132,4 +134,16 @@ void _prompt(void)
 	putchar('$');
 	putchar(']');
 
+}
+void _exec(char **param)
+{
+	int ex;
+
+	ex = execve(param[0], param, NULL);
+
+	if (ex == -1)
+	{
+		perror("Error execve\n");
+		exit(0);
+	}
 }
