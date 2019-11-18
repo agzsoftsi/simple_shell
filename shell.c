@@ -13,6 +13,7 @@ void intoHsh(void);
 char **ParseCommand(char *command, char *separator);
 void _prompt(void);
 void _exec(char **param);
+void _free(char **param);
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +22,6 @@ int main(int argc, char *argv[])
 		intoHsh();
 	else
 		_exec(++argv);
-
 
 	return (0);
 }
@@ -58,9 +58,9 @@ void intoHsh(void)
 			perror("Error fork");
 
 		}
-
 		_prompt();
 	}
+	printf("Done!\n");
 }
 
 char **ParseCommand(char *command, char *separator)
@@ -146,4 +146,17 @@ void _exec(char **param)
 		perror("Error execve\n");
 		exit(0);
 	}
+}
+
+void _free(char **param)
+{
+	int i = 0;
+
+	printf("LIBERANDO\n");
+	for (i = 0;*(param+i) != NULL; i++)
+	{
+		printf("LIBERANDO %d\n",i);
+		free(param[i]);
+	}
+	free(param);
 }
