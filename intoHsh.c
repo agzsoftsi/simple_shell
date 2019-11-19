@@ -36,10 +36,10 @@ void intoHsh(char **env)
 				{
 					_printenv(env);
 					free(param);
-					free(command);
 				} else
 					_exec(param, env);
 
+				free(command);
 			}
 					exit(0);
 		}
