@@ -17,7 +17,7 @@
 void intoHsh(char **env);
 char **ParseCommand(char *command, char *separator);
 void _prompt(void);
-void _exec(char **param);
+void _exec(char **param, char **env);
 void _free(char **param);
 void _printenv(char **env);
 #endif

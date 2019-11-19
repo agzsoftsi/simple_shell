@@ -19,7 +19,7 @@ int main(int argc, char *argv[], char **env)
 	if (argc == 1)
 		intoHsh(env);
 	else
-		_exec(++argv);
+		_exec(++argv, env);
 
 	return (0);
 }

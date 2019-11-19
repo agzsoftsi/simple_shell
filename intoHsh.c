@@ -12,38 +12,45 @@ void intoHsh(char **env)
 	pid_t pid;
 
 	command = NULL;
-	 if (isatty(fileno(stdin)))
-		_prompt();
+	_prompt();
 	while (getline(&command, &sizebuf, stdin) != EOF)
 	{
+		if (strcmp(command, "exit\n") == 0)
+		{
+			free(command);
+			printf("Done!\n");
+			exit(0);
+		}
+
 		pid = fork();
 		if (pid > 0)
 		{
-			free(command);
 			wait(NULL);
 		}
 		else if (pid == 0)
 		{
 			param = ParseCommand(command, " ");
-			if (strcmp(param[0], "env") == 0)
+			if (param != NULL)
 			{
-				_printenv(env);
-				exit(0);
+				if (strcmp(param[0], "env") == 0)
+				{
+					_printenv(env);
+					free(param);
+					free(command);
+				} else
+					_exec(param, env);
+
 			}
-			if (strcmp(param[0], "exit") == 0)
-			{
-				printf("exit program\n");
-				exit(2);
-			}
-			_exec(param);
+		/*			free(command);*/
+					exit(0);
 		}
 		if (pid == -1)
 		{
 			perror("Error fork");
 		}
-	 if (isatty(fileno(stdin)))
-		_prompt();
+	_prompt();
 	}
 	if (isatty(fileno(stdin)))
 		printf("Done!\n");
+	free(command);
 }

@@ -20,19 +20,15 @@ char **ParseCommand(char *command, char *separator)
 			Qword++;
 	}
 	Qword != 1 ? Qword++ : (Qword = 1);
-	param = (char **) malloc(sizeof(char *));
+	if ((len - 1) == 0)
+	{
+		free(command);
+		return (NULL);
+	}
+	param = malloc((Qword + 3) * sizeof(char **));
 	if (param == NULL)
 	{
 		return (NULL);
-	}
-	for (i = 0; i < Qword + 1; i++)
-	{
-		param[i] = (char *) malloc(sizeof(char *));
-		if (param[i] == NULL)
-		{
-			free(param);
-			return (NULL);
-		}
 	}
 	i = 0;
 	s = strtok(command, separator);

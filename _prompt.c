@@ -5,7 +5,10 @@
  **/
 void _prompt(void)
 {
-	putchar('[');
-	putchar('$');
-	putchar(']');
+	if (isatty(fileno(stdin)))
+	{
+		putchar('[');
+		putchar('$');
+		putchar(']');
+	}
 }
