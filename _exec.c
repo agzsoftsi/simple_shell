@@ -13,7 +13,6 @@ void _exec(char **param, char **env)
 
 	if (ex == -1)
 	{
-		free(param);
 		perror("Error execve\n");
 	}
 	free(param);
