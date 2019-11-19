@@ -1,0 +1,6 @@
+	if (strcmp(param[0],"cd") == 0 && param[2] ==NULL)
+	{
+			if(!chdir(param[1]))
+				perror("Error chdir\n");
+	} else
+	{
