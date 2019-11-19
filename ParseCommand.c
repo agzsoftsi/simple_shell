@@ -25,7 +25,7 @@ char **ParseCommand(char *command, char *separator)
 		free(command);
 		return (NULL);
 	}
-	param = malloc((Qword + 3) * sizeof(char **));
+	param = malloc((Qword + 2) * sizeof(char **));
 	if (param == NULL)
 	{
 		return (NULL);
