@@ -41,7 +41,6 @@ void intoHsh(char **env)
 					_exec(param, env);
 
 			}
-		/*			free(command);*/
 					exit(0);
 		}
 		if (pid == -1)
