@@ -9,43 +9,52 @@ void intoHsh(char **env)
 	size_t sizebuf;
 	char *command = NULL;
 	char **param;
+	char **cdCommand;
+	char *currDir;
+	char currDirBuf[256];
+	size_t sizeDirBuf=256;
 	pid_t pid;
-	char *s;
+/*	char *s;
 	int sw = 0;
-	unsigned int len = 0;
+	unsigned int len = 0;*/
 
 	command = NULL;
 	_prompt();
+	currDir = getcwd(currDirBuf,sizeDirBuf);
+	if (currDir == NULL)
+		perror("Error <getcwd>");
 	while (getline(&command, &sizebuf, stdin) != EOF)
 	{
-		if (strcmp(command, "exit\n") == 0)
+		if (strncmp(command, "cd", 2) == 0)
+		{
+			cdCommand = ParseCommand(command, " ");
+			printf("chadir [%s]-[%s]-[%s]\n",cdCommand[0],cdCommand[1],currDirBuf);
+			if (strcmp(cdCommand[1],"-") == 0)
+			{
+				cdCommand[1] = currDirBuf;	
+				if(chdir(cdCommand[1]))
+					perror("Error:<chdir>");
+				currDir = getcwd(currDirBuf, sizeDirBuf);
+				if (currDir == NULL)
+					perror("Error <getcwd>");
+				free(cdCommand);
+				continue;
+			}
+			currDir = getcwd(currDirBuf, sizeDirBuf);
+			if (currDir == NULL)
+				perror("Error <getcwd>");
+
+			if(chdir(cdCommand[1]))
+				perror("Error:<chdir>");
+			free(cdCommand);
+			continue;
+		}
+
+		if (strcmp(command,"exit\n") == 0)
 		{
 			free(command);
 			printf("Done!\n");
 			exit(0);
-		}
-		printf("sizeof %ld\n",sizeof(s));
-		s = strdup(command);
-		printf("sizeof %ld\n",sizeof(s));
-		s = strtok(s," ");	
-			printf("primero %s-%d\n",s,getpid());
-		if (strcmp(s,"cd") == 0)
-		{
-			sw = 1;
-			s = strtok(NULL," ");	
-			len = strlen(s);
-			s[len-1]=='\n' ? s[len-1]='\0' : (s[len-1]=s[len-1]);
-			
-				if(chdir(s)!= 0)
-					perror("Error chdir\n");
-			printf("segundo %s-%d\n",s,errno);
-		}
-		free(s);
-		if(sw)
-		{
-			sw = 0;
-			_prompt();
-			continue;
 		}
 
 		pid = fork();
@@ -67,7 +76,7 @@ void intoHsh(char **env)
 
 				free(command);
 			}
-					exit(0);
+			exit(0);
 		}
 		if (pid == -1)
 		{
