@@ -1,0 +1,92 @@
+#include "shell.h"
+int BuiltIns(char *command);
+/**
+ * intoHsh - Start the shell, process, loop of instructions
+ * @env:  array enviroment
+ * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
+ **/
+void intoHsh(char **env)
+{
+	size_t sizebuf;
+	char *command = NULL;
+	char **param;
+	pid_t pid;
+
+	command = NULL;
+	_prompt();
+	while (getline(&command, &sizebuf, stdin) != EOF)
+	{
+		if (BuiltIns(command))
+		{
+			_prompt();
+			continue;
+		}
+
+		pid = fork();
+		if (pid > 0)
+		{
+			wait(NULL);
+		}
+		else if (pid == 0)
+		{
+			param = ParseCommand(command, " ");
+			if (param != NULL)
+			{
+				if (strcmp(param[0], "env") == 0)
+				{
+					_printenv(env);
+					free(param);
+				} else
+					_exec(param, env);
+
+				free(command);
+			}
+			exit(0);
+		}
+		if (pid == -1)
+		{
+			perror("Error fork");
+		}
+	_prompt();
+	}
+	if (isatty(fileno(stdin)))
+		printf("Done!\n");
+	free(command);
+}
+int BuiltIns(char *command)
+{
+	char *s;
+	unsigned int len = 0;
+	int sw = 0;
+
+	printf("sizeof %ld\n",sizeof(s));
+	s = strdup(command);
+	if (s == NULL)
+		printf("no pude duplicar %d\n",errno);
+	printf("sizeof %ld\n",sizeof(s));
+	s = strtok(s," ");
+		printf("primero %s-%d\n",s,getpid());
+	if (strcmp(s,"cd") == 0)
+	{
+		s = strtok(NULL," ");
+		len = strlen(s);
+		s[len-1]=='\n' ? s[len-1]='\0' : (s[len-1]=s[len-1]);
+		
+		if(chdir(s) != 0)
+			perror("Error chdir\n");
+		printf("el otro procso %s-%d\n",s,getpid());
+
+		printf("segundo %s-%d\n",s,errno);
+
+	}
+	printf("voy a liberar\n");
+	free(s);
+	printf("libere\n");
+	if (strcmp(command, "exit\n") == 0)
+	{
+		free(command);
+		printf("Done!\n");
+		exit(0);
+	}
+	return(sw);
+}
