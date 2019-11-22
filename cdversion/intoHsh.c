@@ -1,4 +1,5 @@
 #include "shell.h"
+char *_GetEnv(char *var,char **env);
 /**
  * intoHsh - Start the shell, process, loop of instructions
  * @env:  array enviroment
@@ -10,49 +11,71 @@ void intoHsh(char **env)
 	char *command = NULL;
 	char **param;
 	char **cdCommand;
-	char *currDir;
-	char currDirBuf[256];
-	size_t sizeDirBuf=256;
 	pid_t pid;
-/*	char *s;
-	int sw = 0;
-	unsigned int len = 0;*/
+	char *currDir;
+	size_t sizeDirBuf = 512;
+	int countAlloc = 0;
+
 
 	command = NULL;
 	_prompt();
-	currDir = getcwd(currDirBuf,sizeDirBuf);
-	if (currDir == NULL)
-		perror("Error <getcwd>");
 	while (getline(&command, &sizebuf, stdin) != EOF)
 	{
+		
 		if (strncmp(command, "cd", 2) == 0)
 		{
 			cdCommand = ParseCommand(command, " ");
-			printf("chadir [%s]-[%s]-[%s]\n",cdCommand[0],cdCommand[1],currDirBuf);
-			if (strcmp(cdCommand[1],"-") == 0)
+			if (strncmp(cdCommand[0],"cd",2) == 0)
 			{
-				cdCommand[1] = currDirBuf;	
-				if(chdir(cdCommand[1]))
-					perror("Error:<chdir>");
-				currDir = getcwd(currDirBuf, sizeDirBuf);
-				if (currDir == NULL)
-					perror("Error <getcwd>");
-				free(cdCommand);
-				continue;
-			}
-			currDir = getcwd(currDirBuf, sizeDirBuf);
+				if((cdCommand[1] == NULL)||(strncmp(cdCommand[1], "-",1) == 0))
+				{
+					if (cdCommand[1] == NULL)
+					{
+						cdCommand[1] = _GetEnv("HOME",env);	
+					}
+					else
+					{
+						if (strncmp(cdCommand[1],"-",1) == 0)
+						{
+							cdCommand[1] = currDir;
+						}
+					}
+				}
+			currDir = getcwd(NULL,sizeDirBuf);
 			if (currDir == NULL)
 				perror("Error <getcwd>");
+			else
+				countAlloc++;
+			}
+
+			printf("countALLOC=[%d]\n",countAlloc);
 
 			if(chdir(cdCommand[1]))
 				perror("Error:<chdir>");
 			free(cdCommand);
+			free(command);
+			command = NULL;
+			_prompt();
 			continue;
 		}
+		else
+		{
+			while (countAlloc)
+			{
+				free(currDir);
+				--countAlloc;
+			}
+		}
+
 
 		if (strcmp(command,"exit\n") == 0)
 		{
 			free(command);
+			while (countAlloc)
+			{
+				free(currDir);
+				--countAlloc;
+			}
 			printf("Done!\n");
 			exit(0);
 		}
@@ -87,4 +110,28 @@ void intoHsh(char **env)
 	if (isatty(fileno(stdin)))
 		printf("Done!\n");
 	free(command);
+	free(cdCommand);
+}
+char *_GetEnv(char *var,char **env)
+{
+
+	char **enviroment;
+	char *ValuePos;
+	unsigned int len;
+
+	len = strlen(var);
+
+	printf("len=%u\n",len);
+
+	UNUSED(enviroment);
+	for (enviroment = env; *env != NULL; env++)
+	{
+		if(strncmp(var,*env,len) == 0)
+		{
+			ValuePos = strchr(*env,'=');
+			ValuePos++;
+			break;
+		}
+	}
+return(ValuePos);
 }
