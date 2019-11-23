@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 #define UNUSED(argc)(void)(argc)
 void intoHsh(char **env);
 char **ParseCommand(char *command, char *separator);
@@ -20,5 +21,5 @@ void _prompt(void);
 void _exec(char **param, char **env);
 void _free(char **param);
 void _printenv(char **env);
-void _pwd(void);
+void _path(char **param);
 #endif
