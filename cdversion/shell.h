@@ -21,4 +21,7 @@ void _prompt(void);
 void _exec(char **param, char **env);
 void _free(char **param);
 void _printenv(char **env);
+int Builtin(char *command, char **env);
+char *_GetEnv(char *var,char **env);
+void _printenviron(void);
 #endif

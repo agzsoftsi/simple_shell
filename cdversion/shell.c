@@ -16,6 +16,7 @@ int main(int argc, char *argv[], char **env)
 
 	UNUSED(env);
 
+
 	if (argc == 1)
 		intoHsh(env);
 	else
