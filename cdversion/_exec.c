@@ -9,6 +9,8 @@ void _exec(char **param, char **env)
 {
 	int ex;
 
+	_path(param);
+
 	ex = execve(param[0], param, env);
 
 	if (ex == -1)
