@@ -8,6 +8,13 @@ void _prompt(void)
 	if (isatty(fileno(stdin)))
 	{
 		putchar('[');
+		putchar('C');
+		putchar('I');
+		putchar('S');
+		putchar('H');
+		putchar('E');
+		putchar('L');
+		putchar('L');
 		putchar('$');
 		putchar(']');
 	}
