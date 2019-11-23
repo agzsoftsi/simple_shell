@@ -20,4 +20,5 @@ void _prompt(void);
 void _exec(char **param, char **env);
 void _free(char **param);
 void _printenv(char **env);
+void _pwd(void);
 #endif
