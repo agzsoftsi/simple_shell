@@ -9,11 +9,19 @@ void _exec(char **param, char **env)
 {
 	int ex;
 
-	ex = execve(param[0], param, env);
-
-	if (ex == -1)
+	if (strcmp(param[0], "pwd") == 0)
 	{
-		perror("Error execve\n");
+		_pwd();
+		free(param);
 	}
-	free(param);
+	else
+	{
+		ex = execve(param[0], param, env);
+
+		if (ex == -1)
+		{
+			perror("Error execve\n");
+		}
+		free(param);
+	}
 }
