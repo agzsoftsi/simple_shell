@@ -10,7 +10,6 @@ void intoHsh(char **env)
 {
 	size_t sizebuf;
 	char *command = NULL;
-	/*char **param;*/
 	pid_t pid;
 	int indBuilt = 0;
 
@@ -21,13 +20,13 @@ void intoHsh(char **env)
 		if (strcmp(command, "\n") != 0)
 		{
 			indBuilt = Builtin(command, env);
-			if (indBuilt == 1)
+			if (indBuilt == CHANGE_DIR)
 			{
 				free(command);
 				command = NULL;
 				continue;
 			};
-			if (indBuilt == 2)
+			if (indBuilt == EXIT_SHELL)
 			{
 				free(command);
 				exit(0);
@@ -57,6 +56,13 @@ void intoHsh(char **env)
 		printf("Done!\n");
 	free(command);
 }
+/**
+ * execute - execute command whith enviroment
+ * @command: take a command
+ * @env: enviroment
+ * Return: void
+ * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
+ **/
 void execute(char *command, char **env)
 {
 	char **param;
