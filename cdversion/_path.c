@@ -25,11 +25,11 @@ void _path(char **param, char **env)
 	{
 		strcpy(path1, Directories[i]);
 		strcat(path1, "/");
-		strcat(path1,param[0]);
+		strcat(path1, param[0]);
 
 		if (stat(path1, &st) == 0)
 		{
-			param[0]=strdup(path1);
+			param[0] = strdup(path1);
 			break;
 
 		}
