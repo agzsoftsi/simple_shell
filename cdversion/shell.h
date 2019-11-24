@@ -18,14 +18,15 @@
 #define UNUSED(argc)(void)(argc)
 #define CHANGE_DIR 1
 #define EXIT_SHELL 2
-void intoHsh(char **env);
+void errors(char *program, char **param);
+void intoHsh(char **env, char *program);
 char **ParseCommand(char *command, char *separator);
 void _prompt(void);
-void _exec(char **param, char **env);
+int _exec(char **param, char **env, char *program);
 void _free(char **param);
 void _printenv(char **env);
 int Builtin(char *command, char **env);
 char *_GetEnv(char *var, char **env);
 void _printenviron(void);
-void _path(char **param, char **env);
+int _path(char **param, char **env);
 #endif

@@ -1,12 +1,12 @@
 #include "shell.h"
 
-void execute(char *command, char **env);
+void execute(char *command, char **env, char *program);
 /**
  * intoHsh - Start the shell, process, loop of instructions
  * @env:  array enviroment
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
-void intoHsh(char **env)
+void intoHsh(char **env, char *program)
 {
 	size_t sizebuf;
 	char *command = NULL;
@@ -38,7 +38,7 @@ void intoHsh(char **env)
 			}
 			else if (pid == 0)
 			{
-				execute(command, env);
+				execute(command, env, program);
 			}
 			if (pid == -1)
 			{
@@ -63,7 +63,7 @@ void intoHsh(char **env)
  * Return: void
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
-void execute(char *command, char **env)
+void execute(char *command, char **env, char *program)
 {
 	char **param;
 
@@ -75,7 +75,11 @@ void execute(char *command, char **env)
 			_printenv(env);
 			free(param);
 		} else
-			_exec(param, env);
+		{
+			if (_exec(param, env, program))
+				exit(127);
+
+		}
 
 		free(command);
 	}

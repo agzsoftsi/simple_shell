@@ -13,14 +13,21 @@ int main(int argc, char *argv[], char **env)
 	FILE *stderr;
 	FILE *stdin;
 	FILE *stdout;
+	char *program;
 
 	UNUSED(env);
+	program = argv[0];
 
 
 	if (argc == 1)
-		intoHsh(env);
+	{
+		intoHsh(env, program);
+	}
 	else
-		_exec(++argv, env);
+	{
+		if(_exec(++argv, env, program))
+			exit(127);
+	}
 
 	return (0);
 }

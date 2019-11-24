@@ -8,7 +8,7 @@
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  */
 
-void _path(char **param, char **env)
+int _path(char **param, char **env)
 {
 	struct stat st;
 	char *path1 = malloc(512);
@@ -42,10 +42,11 @@ void _path(char **param, char **env)
 	}
 	if (Directories[i] == NULL)
 	{
-		param[0] = NULL;
-		fprintf(stdout,"Error _path [exe file doesn't exist]->[%s]\n",strerror(errno));
+		return(1);
+	/*	param[0] = NULL;*/
 	}
 	free(PathParsed);
 	free(Directories);
-	free(path1);
+	/*free(path1);*/
+return(0);
 }

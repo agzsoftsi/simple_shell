@@ -5,19 +5,33 @@
  *@env: Enviroment
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
-void _exec(char **param, char **env)
+int  _exec(char **param, char **env, char *program)
 {
 	int ex;
+	int ResultPath;
 
-	_path(param, env);
+	UNUSED(program);
+
+
+	ResultPath = _path(param, env);
+
 	
-
-	if (param[0] != NULL)
+	if (!ResultPath)
 	{
 		ex = execve(param[0], param, env);
 
 		if (ex == -1)
-			fprintf(stdout,"Error _exec(): [%s]->%s\n",strerror(errno),param[0]);
+		{
+			errors(program, param);
+			return(1);
+		}
 	}
+	else
+	{
+		errors(program, param);
+		return(1);
+	}
+		
 	free(param);
+return(0);
 }
