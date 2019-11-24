@@ -43,7 +43,7 @@ void _path(char **param, char **env)
 	if (Directories[i] == NULL)
 	{
 		param[0] = NULL;
-		perror("exe Doesn't exist");
+		fprintf(stdout,"Error _path [exe file doesn't exist]->[%s]\n",strerror(errno));
 	}
 	free(PathParsed);
 	free(Directories);
