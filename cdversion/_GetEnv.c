@@ -1,5 +1,12 @@
 #include "shell.h"
-char *_GetEnv(char *var,char **env)
+/**
+ * _GetEnv - obtain value of a enviroment var
+ * @var: name of enviroment var
+ * @env: enviroment
+ * Return: value of enviroment var
+ * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
+ **/
+char *_GetEnv(char *var, char **env)
 {
 
 	char **enviroment;
@@ -11,12 +18,12 @@ char *_GetEnv(char *var,char **env)
 	UNUSED(enviroment);
 	for (enviroment = env; *env != NULL; env++)
 	{
-		if(strncmp(var,*env,len) == 0)
+		if (strncmp(var, *env, len) == 0)
 		{
-			ValuePos = strchr(*env,'=');
+			ValuePos = strchr(*env, '=');
 			ValuePos++;
 			break;
 		}
 	}
-return(ValuePos);
+return (ValuePos);
 }
