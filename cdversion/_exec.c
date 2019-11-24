@@ -9,13 +9,16 @@ void _exec(char **param, char **env)
 {
 	int ex;
 
-	_path(param);
+	_path(param, env);
 
-	ex = execve(param[0], param, env);
-
-	if (ex == -1)
+	if (param[0] != NULL)
 	{
-		perror("Error execve\n");
+		ex = execve(param[0], param, env);
+
+		if (ex == -1)
+		{
+			perror("Error execve\n");
+		}
 	}
 	free(param);
 }

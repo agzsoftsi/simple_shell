@@ -25,5 +25,5 @@ void _printenv(char **env);
 int Builtin(char *command, char **env);
 char *_GetEnv(char *var,char **env);
 void _printenviron(void);
-void _path(char **param);
+void _path(char **param, char **env);
 #endif

@@ -3,39 +3,49 @@
 /**
  * _path - search its path os a command
  * @param: command to search.
+ * @env: var enviroment
  * Return: nothing.
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  */
 
-void _path(char **param)
+void _path(char **param, char **env)
 {
-	char *path1 = malloc(100);
-	char *path2 = malloc(100);
-
 	struct stat st;
+	char *path1 = malloc(512);
+	char *PATH;
+	char **PathParsed;
+	char **Directories;
+	int i = 0;
 
-	strcpy(path1, "/bin/");
-	strcpy(path2, "/usr/bin/");
+	PATH = _GetEnv("PATH", env);
+	PathParsed = ParseCommand(PATH, "=");
+	Directories = ParseCommand(PathParsed[0], ":");
 
-
-	strcat(path1, param[0]);
-	strcat(path2, param[0]);
-
-
-	if (stat(path1, &st) == 0)
+	for (i = 0; Directories[i] != NULL; i++)
 	{
-		param[0] = path1;
+		strcpy(path1, Directories[i]);
+		strcat(path1, "/");
+		strcat(path1,param[0]);
 
-		return;
+		if (stat(path1, &st) == 0)
+		{
+			param[0]=strdup(path1);
+			break;
+
+		}
+		if (stat(param[0], &st) == 0)
+		{
+			break;
+
+		}
+		strcpy(path1, "");
 	}
-
-	if (stat(path2, &st) == 0)
+	if (Directories[i] == NULL)
 	{
-		param[0] = path2;
-
-		return;
+		param[0] = NULL;
+		perror("exe Doesn't exist");
 	}
-
-
-
+	free(PathParsed);
+	free(Directories);
+	free(path1);
 }

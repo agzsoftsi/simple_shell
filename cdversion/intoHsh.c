@@ -20,7 +20,6 @@ void intoHsh(char **env)
 	{
 		if (strcmp(command, "\n") != 0)
 		{
-			printf("entre a proceso %s\n", command);
 			indBuilt = Builtin(command, env);
 			if (indBuilt == 1)
 			{
