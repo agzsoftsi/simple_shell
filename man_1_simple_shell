@@ -3,7 +3,16 @@
 .B CISHELL, hsh - a command language interpreter
 .SH SYNOPSIS
 .IP
-.I hsh [command] [arg] ...
+.I hsh [command] [arg]
+.IP LIBRARIES
+.IP #include '<stdio.h>'
+.IP #include "<string.h>"
+.IP #include "<unistd.h>"
+.IP #include "<stdlib.h>"
+.IP #include "<sys/types.h>"
+.IP #include "<sys/wait.h>"
+.IP #include "<errno.h>"
+.IP #include "<sys/stat.h>"
 
 .SH DESCRIPTION
 CISHELL (hsh) replicates the command language interpreter (sh) and executes commands read from the standard input or from a file.\
@@ -11,15 +20,15 @@ CISHELL (hsh) replicates the command language interpreter (sh) and executes comm
 
 .SH OVERVIEW
 CISHELL (hsh) is a command that reads lines from either a file or the terminal, interprets them, and generally executes the commands.\
-It is a program that is running when the user compiles BombShell (simple_shell) and runs the executable file, ./hsh. \
+It is a program that is running when the user compiles CISHELL (simple_shell) and runs the executable file, ./hsh. \
 CISHELL implements a language that has flow control constructs, steering the computer to execute the commands. It incorporates\
 features for interactive use and has the advantage of being in non-interactive mode, allowing the user to pipe commands into hsh such as echo "ls" | ./hsh\
 That is, commands can be typed directly to the running shell or can be put into a file and the file can be executed directly by the shell.
 
 .SH INVOCATION
-To start up BombShell, you must first compile with gcc -Wall -Werror -Wextra -pedantic *.c -o hsh and run the executable ./hsh.
+To start up CISHELL, you must first compile with gcc -Wall -Werror -Wextra -pedantic *.c -o hsh and run the executable ./hsh.
 If no arguments are present and if the standard input of the shell is connected to a terminal, the shell is considered in interactive mode .
-BombShell is designed to interact in Linux or a Unix like system since the shell uses the Linux system calls to retrieve and execute executable programs found in the $PATH. Our version of the shell incorporates the builtin commands "exit" and "env".
+CISHELL is designed to interact in Linux or a Unix like system since the shell uses the Linux system calls to retrieve and execute executable programs found in the $PATH. Our version of the shell incorporates the builtin commands "exit" and "env" and "cd".
 .SH BUILT-IN COMMANDS
 This secion has information on the included builtin commands incorporated into CISHELL
 .IP env
@@ -28,6 +37,8 @@ writes the current environment to standard output
 sets a new environmental variable or modifies an existing one to the environment
 .IP exit
 terminates CISHELL's processes
+.IP cd
+change the shell working directory
 .SH EXAMPLE OF EXECUTABLE
 Here is an example use of the "ls" command in CISHELL:
 .IP
