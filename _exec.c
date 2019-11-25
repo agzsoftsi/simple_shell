@@ -5,28 +5,33 @@
  *@env: Enviroment
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
-void _exec(char **param, char **env)
+int  _exec(char **param, char **env, char *program)
 {
 	int ex;
+	int ResultPath;
 
-	_path(param);
-	/*
-	 *if (strcmp(param[0], "pwd") == 0)
-	 * {
-	 * _pwd();
-	 * free(param);
-	 * }
-	 * else
-	 * {
-	 */
-	ex = execve(param[0], param, env);
+	UNUSED(program);
 
-	if (ex == -1)
+
+	ResultPath = _path(param, env);
+
+
+	if (!ResultPath)
 	{
-		perror("Error execve\n");
+		ex = execve(param[0], param, env);
+
+		if (ex == -1)
+		{
+			errors(program, param);
+			return (1);
+		}
 	}
+	else
+	{
+		errors(program, param);
+		return (1);
+	}
+
 	free(param);
-	/*
-	*}
-	*/
+	return (0);
 }
