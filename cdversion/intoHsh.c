@@ -4,6 +4,7 @@ void execute(char *command, char **env, char *program);
 /**
  * intoHsh - Start the shell, process, loop of instructions
  * @env:  array enviroment
+ * @program:  name of exe shell
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
 void intoHsh(char **env, char *program)
@@ -12,6 +13,7 @@ void intoHsh(char **env, char *program)
 	char *command = NULL;
 	pid_t pid;
 	int indBuilt = 0;
+	int status;
 
 	command = NULL;
 	_prompt();
@@ -34,7 +36,14 @@ void intoHsh(char **env, char *program)
 			pid = fork();
 			if (pid > 0)
 			{
-				wait(NULL);
+				wait(&status);
+				if (WIFEXITED(status))
+				{
+					if (WEXITSTATUS(status) == 127 && !isatty(STDIN_FILENO))
+						exit(WEXITSTATUS(status));
+				}
+				printf("status=[%d]\n", WIFEXITED(status));
+				printf("status=[%d]\n", WEXITSTATUS(status));
 			}
 			else if (pid == 0)
 			{
@@ -60,6 +69,7 @@ void intoHsh(char **env, char *program)
  * execute - execute command whith enviroment
  * @command: take a command
  * @env: enviroment
+ * @program:  name of exe shell
  * Return: void
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
@@ -77,11 +87,11 @@ void execute(char *command, char **env, char *program)
 		} else
 		{
 			if (_exec(param, env, program))
-				exit(127);
+				_exit(127);
 
 		}
 
 		free(command);
 	}
-	exit(0);
+	_exit(0);
 }

@@ -18,14 +18,15 @@ int main(int argc, char *argv[], char **env)
 	UNUSED(env);
 	program = argv[0];
 
-
 	if (argc == 1)
 	{
 		intoHsh(env, program);
 	}
 	else
 	{
-		if(_exec(++argv, env, program))
+		/* en esta opcion es para ejecutar shells */
+		/* el sh intenta ejecutar inmediatamente */
+		if (_exec(++argv, env, program))
 			exit(127);
 	}
 

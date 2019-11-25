@@ -42,11 +42,11 @@ int _path(char **param, char **env)
 	}
 	if (Directories[i] == NULL)
 	{
-		return(1);
+		return (1);
 	/*	param[0] = NULL;*/
 	}
 	free(PathParsed);
 	free(Directories);
 	/*free(path1);*/
-return(0);
+return (0);
 }

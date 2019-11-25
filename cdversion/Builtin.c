@@ -5,7 +5,7 @@ int Builtin(char *command, char **env)
 	size_t sizeDirBuf = 512;
 	static char *currDir;
 	static char currDirector[512];
-	static int countAlloc = 0;
+	static int countAlloc;
 
 
 	if (strncmp(command, "cd", 2) == 0)
