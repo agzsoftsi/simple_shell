@@ -13,13 +13,20 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <errno.h>
 #include <sys/stat.h>
 #define UNUSED(argc)(void)(argc)
-void intoHsh(char **env);
+#define CHANGE_DIR 1
+#define EXIT_SHELL 2
+void errors(char *program, char **param);
+void intoHsh(char **env, char *program);
 char **ParseCommand(char *command, char *separator);
 void _prompt(void);
-void _exec(char **param, char **env);
+int _exec(char **param, char **env, char *program);
 void _free(char **param);
 void _printenv(char **env);
-void _path(char **param);
+int Builtin(char *command, char **env);
+char *_GetEnv(char *var, char **env);
+void _printenviron(void);
+int _path(char **param, char **env);
 #endif
