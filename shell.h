@@ -29,4 +29,5 @@ int Builtin(char *command, char **env);
 char *_GetEnv(char *var, char **env);
 void _printenviron(void);
 int _path(char **param, char **env);
+void execute(char *command, char **env, char *program);
 #endif

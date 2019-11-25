@@ -2,6 +2,7 @@
 /**
  * intoHsh - Start the shell, process, loop of instructions
  * @env:  array enviroment
+ * @program: name of exe shell
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
 void intoHsh(char **env, char *program)
