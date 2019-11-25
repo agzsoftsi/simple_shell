@@ -3,6 +3,8 @@
  * _exec - Execute command
  *@param : command parsed
  *@env: Enviroment
+ *@program: main exe name
+ *Return: 0 succed, 1 not found, 2 permision denied
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
 int  _exec(char **param, char **env, char *program)
@@ -22,13 +24,13 @@ int  _exec(char **param, char **env, char *program)
 
 		if (ex == -1)
 		{
-			errors(program, param,"Permission denied");
+			errors(program, param, "Permission denied");
 			return (2);
 		}
 	}
 	else
 	{
-		errors(program, param,"not found");
+		errors(program, param, "not found");
 		return (1);
 	}
 

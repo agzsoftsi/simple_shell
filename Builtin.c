@@ -7,7 +7,6 @@ int Builtin(char *command, char **env)
 	static char currDirector[512];
 	static int countAlloc;
 
-
 	if (strncmp(command, "cd", 2) == 0)
 	{
 		cdCommand = ParseCommand(command, " ");
@@ -44,8 +43,6 @@ int Builtin(char *command, char **env)
 		_prompt();
 		return (1);
 	}
-
-
 	if (strcmp(command, "exit\n") == 0)
 	{
 		while (countAlloc)
