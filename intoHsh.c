@@ -40,8 +40,6 @@ void intoHsh(char **env, char *program)
 					if (WEXITSTATUS(status) == 127 && !isatty(STDIN_FILENO))
 						exit(WEXITSTATUS(status));
 				}
-				printf("status=[%d]\n", WIFEXITED(status));
-				printf("status=[%d]\n", WEXITSTATUS(status));
 			}
 			else if (pid == 0)
 			{
