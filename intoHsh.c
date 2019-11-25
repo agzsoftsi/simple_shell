@@ -10,7 +10,7 @@ void intoHsh(char **env, char *program)
 	size_t sizebuf;
 	char *command = NULL;
 	pid_t pid;
-	int indBuilt = 0, int status;
+	int indBuilt = 0, status;
 
 	command = NULL;
 	_prompt();
