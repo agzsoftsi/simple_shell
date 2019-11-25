@@ -22,13 +22,13 @@ int  _exec(char **param, char **env, char *program)
 
 		if (ex == -1)
 		{
-			errors(program, param);
-			return (1);
+			errors(program, param,"Permission denied");
+			return (2);
 		}
 	}
 	else
 	{
-		errors(program, param);
+		errors(program, param,"not found");
 		return (1);
 	}
 

@@ -37,7 +37,7 @@ void intoHsh(char **env, char *program)
 				wait(&status);
 				if (WIFEXITED(status))
 				{
-					if (WEXITSTATUS(status) == 127 && !isatty(STDIN_FILENO))
+					if (!isatty(STDIN_FILENO))
 						exit(WEXITSTATUS(status));
 				}
 			}
@@ -72,6 +72,7 @@ void intoHsh(char **env, char *program)
 void execute(char *command, char **env, char *program)
 {
 	char **param;
+	int indEx = 0;
 
 	param = ParseCommand(command, " ");
 	if (param != NULL)
@@ -82,8 +83,11 @@ void execute(char *command, char **env, char *program)
 			free(param);
 		} else
 		{
-			if (_exec(param, env, program))
+			indEx = _exec(param, env, program);
+			if (indEx == 1)
 				_exit(127);
+			else if (indEx == 2) 
+				_exit(126);
 
 		}
 

@@ -18,7 +18,7 @@
 #define UNUSED(argc)(void)(argc)
 #define CHANGE_DIR 1
 #define EXIT_SHELL 2
-void errors(char *program, char **param);
+void errors(char *program, char **param, char *message);
 void intoHsh(char **env, char *program);
 char **ParseCommand(char *command, char *separator);
 void _prompt(void);
