@@ -15,6 +15,7 @@ int _path(char **param, char **env)
 	char *PATH;
 	char **PathParsed;
 	char **Directories;
+	int indNIL = 0;
 	int i = 0;
 
 	PATH = _GetEnv("PATH", env);
@@ -23,13 +24,13 @@ int _path(char **param, char **env)
 
 	for (i = 0; Directories[i] != NULL; i++)
 	{
-		_strcpy(path1, Directories[i]);
-		_strcat(path1, "/");
-		_strcat(path1, param[0]);
+		strcpy(path1, Directories[i]);
+		strcat(path1, "/");
+		strcat(path1, param[0]);
 
 		if (stat(path1, &st) == 0)
 		{
-			param[0] = _strdup(path1);
+			param[0] = strdup(path1);
 			break;
 
 		}
@@ -38,15 +39,12 @@ int _path(char **param, char **env)
 			break;
 
 		}
-		_strcpy(path1, "");
+		strcpy(path1, "");
 	}
 	if (Directories[i] == NULL)
-	{
-		return (1);
-		/*param[0] = NULL;*/
-	}
+		indNIL = 1;
 	free(PathParsed);
 	free(Directories);
-	/*free(path1);*/
-	return (0);
+	free(path1);
+	return (indNIL);
 }

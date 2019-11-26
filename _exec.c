@@ -28,6 +28,6 @@ int  _exec(char **param, char **env)
 		return (1);
 	}
 
-	free(param);
+	/*free(param); VALGRIND*/
 	return (0);
 }
