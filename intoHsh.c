@@ -1,17 +1,18 @@
 #include "shell.h"
-void _Wait(void);
+void _Wait(char **argv, char *command, int QExecutes);
 /**
  * intoHsh - Start the shell, process, loop of instructions
  * @env:  array enviroment
- * @program: name of exe shell
+ * @argv: array arguments
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
-void intoHsh(char **env, char *program)
+void intoHsh(char **env, char **argv)
 {
 	size_t sizebuf;
 	char *command = NULL;
 	pid_t pid;
 	int indBuilt = 0;
+	static int Qexecutes = 1;
 
 	command = NULL;
 	_prompt();
@@ -28,12 +29,14 @@ void intoHsh(char **env, char *program)
 			{	free(command);
 				exit(0);
 			}
-
 			pid = fork();
 			if (pid > 0)
-				_Wait();
+			{
+				_Wait(argv, command, Qexecutes);
+				Qexecutes++;
+			}
 			else if (pid == 0)
-				execute(command, env, program);
+				execute(command, env);
 			if (pid == -1)
 				perror("Error fork");
 		}
@@ -50,11 +53,10 @@ void intoHsh(char **env, char *program)
  * execute - execute command whith enviroment
  * @command: take a command
  * @env: enviroment
- * @program:  name of exe shell
  * Return: void
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
-void execute(char *command, char **env, char *program)
+void execute(char *command, char **env)
 {
 	char **param;
 	int indEx = 0;
@@ -68,7 +70,7 @@ void execute(char *command, char **env, char *program)
 			free(param);
 		} else
 		{
-			indEx = _exec(param, env, program);
+			indEx = _exec(param, env);
 			if (indEx == 1)
 				_exit(127);
 			else if (indEx == 2)
@@ -82,17 +84,29 @@ void execute(char *command, char **env, char *program)
 }
 /**
  * _Wait - Wait for de child process and eval status
+ * @argv: line command args to print name exe shell
+ * @command: command to execute
+ * @Qex: Executions Quantity
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
-void _Wait(void)
+void _Wait(char **argv, char *command, int Qex)
 {
 	int status;
+	char **ParsedCom;
 
 	wait(&status);
 	if (WIFEXITED(status))
 	{
+		ParsedCom = ParseCommand(command, " ");
+		if (WEXITSTATUS(status) == 126)
+			errors(argv[0], ParsedCom[0], PERM_DENIED, Qex);
+
+		if (WEXITSTATUS(status) == 127)
+			errors(argv[0], ParsedCom[0], NOT_FOUND, Qex);
+
+		free(ParsedCom);
+
 		if (!isatty(STDIN_FILENO))
 			exit(WEXITSTATUS(status));
 	}
-
 }
