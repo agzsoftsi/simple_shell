@@ -1,4 +1,5 @@
 #include "shell.h"
+void _Wait(void);
 /**
  * intoHsh - Start the shell, process, loop of instructions
  * @env:  array enviroment
@@ -10,7 +11,7 @@ void intoHsh(char **env, char *program)
 	size_t sizebuf;
 	char *command = NULL;
 	pid_t pid;
-	int indBuilt = 0, status;
+	int indBuilt = 0;
 
 	command = NULL;
 	_prompt();
@@ -25,17 +26,14 @@ void intoHsh(char **env, char *program)
 			};
 			if (indBuilt == EXIT_SHELL)
 			{	free(command);
-				exit(0); }
+				exit(0);
+			}
+
 			pid = fork();
 			if (pid > 0)
-			{	wait(&status);
-				if (WIFEXITED(status))
-				{
-					if (!isatty(STDIN_FILENO))
-						exit(WEXITSTATUS(status)); }
-			}
+				_Wait();
 			else if (pid == 0)
-			{	execute(command, env, program);	}
+				execute(command, env, program);
 			if (pid == -1)
 				perror("Error fork");
 		}
@@ -81,4 +79,20 @@ void execute(char *command, char **env, char *program)
 		free(command);
 	}
 	_exit(0);
+}
+/**
+ * _Wait - Wait for de child process and eval status
+ * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
+ **/
+void _Wait(void)
+{
+	int status;
+
+	wait(&status);
+	if (WIFEXITED(status))
+	{
+		if (!isatty(STDIN_FILENO))
+			exit(WEXITSTATUS(status));
+	}
+
 }

@@ -1,4 +1,12 @@
 #include "shell.h"
+int BuiltExit(char *command);
+/**
+ * Builtin - Evaluate Buitins
+ * @command:  line of command
+ * @env: var enviroments
+ * Return: 1 CD DONE, 2 EXIT DONE, 0 NO ONE
+ * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
+ **/
 int Builtin(char *command, char **env)
 {
 	char **cdCommand = NULL;
@@ -42,21 +50,23 @@ int Builtin(char *command, char **env)
 		free(cdCommand);
 		_prompt();
 		return (1);
-	}
+	} /*CD LOGICAL*/
+
+return (BuiltExit(command));
+}
+/**
+ * BuiltExit - Evaluate Exit Buitin
+ * @command:  line of command
+ * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
+ * Return: 2 EXIT DONE, 0 NOT EXIT
+ **/
+
+int BuiltExit(char *command)
+{
 	if (strcmp(command, "exit\n") == 0)
 	{
-		while (countAlloc)
-		{
-			--countAlloc;
-			free(currDir);
-		}
 		printf("Done!\n");
 		return (2); /*exit(0);*/
-	}
-	while (countAlloc)
-	{
-		/*free(currDir);*/
-		--countAlloc;
 	}
 return (0);
 }
