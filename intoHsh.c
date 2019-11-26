@@ -1,5 +1,5 @@
 #include "shell.h"
-void _Wait(char **argv, char *command, int QExecutes);
+int _Wait(char **argv, char *command, int QExecutes);
 /**
  * intoHsh - Start the shell, process, loop of instructions
  * @env:  array enviroment
@@ -12,6 +12,7 @@ void intoHsh(char **env, char **argv)
 	char *command = NULL;
 	pid_t pid;
 	int indBuilt = 0;
+	int status = 0;
 	static int Qexecutes = 1;
 
 	command = NULL;
@@ -32,7 +33,7 @@ void intoHsh(char **env, char **argv)
 			pid = fork();
 			if (pid > 0)
 			{
-				_Wait(argv, command, Qexecutes);
+				status = _Wait(argv, command, Qexecutes);
 				Qexecutes++;
 			}
 			else if (pid == 0)
@@ -44,10 +45,13 @@ void intoHsh(char **env, char **argv)
 		{	free(command);
 			command = NULL;
 		}
-		_prompt(); }
+		_prompt();
+	}
 	if (isatty(fileno(stdin)))
 		printf("Done!\n");
 	free(command);
+	if (status != 0)
+		exit(status);
 }
 /**
  * execute - execute command whith enviroment
@@ -87,9 +91,10 @@ void execute(char *command, char **env)
  * @argv: line command args to print name exe shell
  * @command: command to execute
  * @Qex: Executions Quantity
+ * Return: return status process
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
-void _Wait(char **argv, char *command, int Qex)
+int _Wait(char **argv, char *command, int Qex)
 {
 	int status;
 	char **ParsedCom;
@@ -105,8 +110,6 @@ void _Wait(char **argv, char *command, int Qex)
 			errors(argv[0], ParsedCom[0], NOT_FOUND, Qex);
 
 		free(ParsedCom);
-
-		if (!isatty(STDIN_FILENO))
-			exit(WEXITSTATUS(status));
 	}
+return (WEXITSTATUS(status));
 }
