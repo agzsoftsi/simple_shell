@@ -19,7 +19,7 @@ void intoHsh(char **env, char **argv)
 	_prompt();
 	while (getline(&command, &sizebuf, stdin) != EOF)
 	{
-		if (strcmp(command, "\n") != 0)
+		if (_strcmp(command, "\n") != 0)
 		{	indBuilt = Builtin(command, env);
 			if (indBuilt == CHANGE_DIR)
 			{	free(command);
@@ -68,7 +68,7 @@ void execute(char *command, char **env)
 	param = ParseCommand(command, " ");
 	if (param != NULL)
 	{
-		if (strcmp(param[0], "env") == 0)
+		if (_strcmp(param[0], "env") == 0)
 		{
 			_printenv(env);
 			/*free(param); VALGRIND*/

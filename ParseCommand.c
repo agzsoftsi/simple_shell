@@ -13,7 +13,7 @@ char **ParseCommand(char *command, char *separator)
 	char **param;
 	char *s;
 
-	len = strlen(command);
+	len = _strlen(command);
 	for (i = 0; i < len; i++)
 	{
 		if (command[i] == *separator)
@@ -32,14 +32,14 @@ char **ParseCommand(char *command, char *separator)
 	}
 	i = 0;
 	s = strtok(command, separator);
-	len = strlen(s);
+	len = _strlen(s);
 	s[len - 1] == '\n' ? s[len - 1] = '\0' : (s[len - 1] = s[len - 1]);
 	param[i] = s;
 	i++;
 	while ((s = strtok(NULL, separator)))
 	{
 		param[i] = s;
-		len = strlen(s);
+		len = _strlen(s);
 		s[len - 1] == '\n' ? s[len - 1] = '\0' : (s[len - 1] = s[len - 1]);
 		i++;
 	}

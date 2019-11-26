@@ -24,13 +24,13 @@ int _path(char **param, char **env)
 
 	for (i = 0; Directories[i] != NULL; i++)
 	{
-		strcpy(path1, Directories[i]);
-		strcat(path1, "/");
-		strcat(path1, param[0]);
+		_strcpy(path1, Directories[i]);
+		_strcat(path1, "/");
+		_strcat(path1, param[0]);
 
 		if (stat(path1, &st) == 0)
 		{
-			param[0] = strdup(path1);
+			param[0] = _strdup(path1);
 			break;
 
 		}
@@ -39,7 +39,7 @@ int _path(char **param, char **env)
 			break;
 
 		}
-		strcpy(path1, "");
+		_strcpy(path1, "");
 	}
 	if (Directories[i] == NULL)
 		indNIL = 1;
