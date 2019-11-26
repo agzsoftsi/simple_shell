@@ -18,15 +18,16 @@
 #define UNUSED(argc)(void)(argc)
 #define CHANGE_DIR 1
 #define EXIT_SHELL 2
-void errors(char *program, char **param, char *message);
-void intoHsh(char **env, char *program);
+#define PERM_DENIED "Permission denied"
+#define NOT_FOUND "not found"
+void errors(char *program, char *param, char *message, int Qexe);
+void intoHsh(char **env, char **argv);
 char **ParseCommand(char *command, char *separator);
 void _prompt(void);
-int _exec(char **param, char **env, char *program);
-void _free(char **param);
+int _exec(char **param, char **env);
 void _printenv(char **env);
 int Builtin(char *command, char **env);
 char *_GetEnv(char *var, char **env);
 int _path(char **param, char **env);
-void execute(char *command, char **env, char *program);
+void execute(char *command, char **env);
 #endif
