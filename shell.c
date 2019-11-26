@@ -13,20 +13,18 @@ int main(int argc, char *argv[], char **env)
 	FILE *stderr;
 	FILE *stdin;
 	FILE *stdout;
-	char *program;
 
 	UNUSED(env);
-	program = argv[0];
 
 	if (argc == 1)
 	{
-		intoHsh(env, program);
+		intoHsh(env, argv);
 	}
 	else
 	{
 		/* en esta opcion es para ejecutar shells */
 		/* el sh intenta ejecutar inmediatamente */
-		if (_exec(++argv, env, program))
+		if (_exec(++argv, env))
 			exit(127);
 	}
 
