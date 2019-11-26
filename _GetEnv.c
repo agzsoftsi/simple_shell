@@ -18,7 +18,7 @@ char *_GetEnv(char *var, char **env)
 	UNUSED(enviroment);
 	for (enviroment = env; *env != NULL; env++)
 	{
-		if (strncmp(var, *env, len) == 0)
+		if (_strncmp(var, *env, len) == 0)
 		{
 			ValuePos = _strchr(*env, '=');
 			ValuePos++;

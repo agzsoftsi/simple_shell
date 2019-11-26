@@ -15,12 +15,12 @@ int Builtin(char *command, char **env)
 	static char currDirector[512];
 	static int countAlloc;
 
-	if (strncmp(command, "cd", 2) == 0)
+	if (_strncmp(command, "cd", 2) == 0)
 	{
 		cdCommand = ParseCommand(command, " ");
-		if (strncmp(cdCommand[0], "cd", 2) == 0)
+		if (_strncmp(cdCommand[0], "cd", 2) == 0)
 		{
-			if ((cdCommand[1] == NULL) || (strncmp(cdCommand[1], "-", 1) == 0))
+			if ((cdCommand[1] == NULL) || (_strncmp(cdCommand[1], "-", 1) == 0))
 			{
 				if (cdCommand[1] == NULL)
 				{
@@ -28,7 +28,7 @@ int Builtin(char *command, char **env)
 				}
 				else
 				{
-					if (strncmp(cdCommand[1], "-", 1) == 0)
+					if (_strncmp(cdCommand[1], "-", 1) == 0)
 					{
 					if (chdir(currDirector))
 						perror("Error:<chdir>");

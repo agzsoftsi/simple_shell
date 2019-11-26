@@ -14,3 +14,27 @@ int _strlen(char *s)
 	}
 	return (i);
 }
+
+/**
+ *_strncmp - return the length of a string
+ *@s1: string 1 to comparate
+ *@s2: string 2 to comparate
+ *@n: number of characters to comparate
+ *Return: 0 is success o -1 is fail
+ */
+
+int _strncmp(char *s1, char *s2, int n)
+{
+
+	int i = 0;
+
+	do {
+		if (s1[i] != s2[i])
+			return (-1);
+
+		i++;
+
+	} while (i != n);
+
+	return (0);
+}
