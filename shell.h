@@ -30,4 +30,12 @@ int Builtin(char *command, char **env);
 char *_GetEnv(char *var, char **env);
 int _path(char **param, char **env);
 void execute(char *command, char **env);
+char *_strcpy(char *dest, char *src);
+char *_strcat(char *dest, char *src);
+char *_strdup(char *str);
+char *_strchr(char *s, char c);
+int _strcmp(char *s1, char *s2);
+int _Wait(char **argv, char *command, int QExecutes);
+int BuiltExit(char *command);
+int _strlen(char *s);
 #endif

@@ -1,5 +1,5 @@
 #include "shell.h"
-int _Wait(char **argv, char *command, int QExecutes);
+
 /**
  * intoHsh - Start the shell, process, loop of instructions
  * @env:  array enviroment
@@ -19,7 +19,7 @@ void intoHsh(char **env, char **argv)
 	_prompt();
 	while (getline(&command, &sizebuf, stdin) != EOF)
 	{
-		if (strcmp(command, "\n") != 0)
+		if (_strcmp(command, "\n") != 0)
 		{	indBuilt = Builtin(command, env);
 			if (indBuilt == CHANGE_DIR)
 			{	free(command);
@@ -28,23 +28,19 @@ void intoHsh(char **env, char **argv)
 			};
 			if (indBuilt == EXIT_SHELL)
 			{	free(command);
-				exit(0);
-			}
+				exit(0); }
 			pid = fork();
 			if (pid > 0)
 			{
 				status = _Wait(argv, command, Qexecutes);
-				Qexecutes++;
-			}
+				Qexecutes++; }
 			else if (pid == 0)
 				execute(command, env);
 			if (pid == -1)
-				perror("Error fork");
-		}
+				perror("Error fork"); }
 		else
 		{	free(command);
-			command = NULL;
-		}
+			command = NULL;	}
 		_prompt();
 	}
 	if (isatty(fileno(stdin)))
@@ -68,7 +64,7 @@ void execute(char *command, char **env)
 	param = ParseCommand(command, " ");
 	if (param != NULL)
 	{
-		if (strcmp(param[0], "env") == 0)
+		if (_strcmp(param[0], "env") == 0)
 		{
 			_printenv(env);
 			free(param);
