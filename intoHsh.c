@@ -118,6 +118,13 @@ int _Wait(char **argv, char *command, int Qex)
 		if (WEXITSTATUS(status) == 127)
 			errors(argv[0], ParsedCom[0], NOT_FOUND, Qex);
 
+		/*unknow errors*/
+		if (WEXITSTATUS(status) != 127 &&
+		    WEXITSTATUS(status) != 126 &&
+		    WEXITSTATUS(status) != 2 &&
+		    WEXITSTATUS(status) != 0)
+			perror("");
+
 		free(ParsedCom);
 	}
 return (WEXITSTATUS(status));
