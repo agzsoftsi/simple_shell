@@ -43,10 +43,8 @@ char **ParseCommand(char *command, char *separator)
 		s[len - 1] == '\n' ? s[len - 1] = '\0' : (s[len - 1] = s[len - 1]);
 		i++;
 	}
-	param[i] = NULL;
 
-	for (i = 0; param[i] != NULL; i++)
-		removeSpaces(param[i]);
+	param[i] = NULL;
 
 	return (param);
 }

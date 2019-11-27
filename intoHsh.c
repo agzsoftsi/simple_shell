@@ -15,22 +15,11 @@ void intoHsh(char **env, char **argv)
 	int status = 0;
 	static int Qexecutes = 1;
 	ssize_t QcharComm;
-	char *comm;
 
 	command = NULL;
 	_prompt();
 	while ((QcharComm = getline(&command, &sizebuf, stdin)) != EOF)
 	{
-		comm = _strdup(command);
-		removeSpaces(comm);
-		if (_strlen(comm) == 1)
-		{
-			command = NULL;
-			free(command);
-			free(comm);
-			continue;
-		}
-		free(comm);
 		if (_strcmp(command, "\n") != 0)
 		{
 			indBuilt = Builtin(command, env);

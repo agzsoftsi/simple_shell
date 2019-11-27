@@ -27,6 +27,7 @@ int _path(char **param, char **env)
 		_strcpy(path1, Directories[i]);
 		_strcat(path1, "/");
 		_strcat(path1, param[0]);
+		removeSpaces(path1);
 
 		if (stat(path1, &st) == 0)
 		{
