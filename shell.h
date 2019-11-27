@@ -16,7 +16,6 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <limits.h>
-#define UNUSED(argc)(void)(argc)
 #define CHANGE_DIR 1
 #define EXIT_SHELL 2
 #define PERM_DENIED "Permission denied"
