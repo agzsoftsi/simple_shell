@@ -14,13 +14,26 @@ void intoHsh(char **env, char **argv)
 	int indBuilt = 0;
 	int status = 0;
 	static int Qexecutes = 1;
+	ssize_t QcharComm;
+	char *comm;
 
 	command = NULL;
 	_prompt();
-	while (getline(&command, &sizebuf, stdin) != EOF)
+	while ((QcharComm = getline(&command, &sizebuf, stdin)) != EOF)
 	{
+		comm = _strdup(command);
+		removeSpaces(comm);
+		if (_strlen(comm) == 1)
+		{
+			command = NULL;
+			free(command);
+			free(comm);
+			continue;
+		}
+		free(comm);
 		if (_strcmp(command, "\n") != 0)
-		{	indBuilt = Builtin(command, env);
+		{
+			indBuilt = Builtin(command, env);
 			if (indBuilt == CHANGE_DIR)
 			{	free(command);
 				command = NULL;
@@ -37,7 +50,9 @@ void intoHsh(char **env, char **argv)
 				Qexecutes++;
 			}
 			else if (pid == 0)
+				{
 				execute(command, env);
+				}
 			if (pid == -1)
 				perror("Error fork");
 		}

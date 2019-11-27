@@ -2,7 +2,6 @@
 #define SHELL_H
 /**
  * Header File - shell.h
- * @argc: number of arguments
  * CISHELL v1.0
  * Authors: Carlos Andres Garcia - Ivan Dario Lasso
  * Cohort: 10 - Cali
@@ -20,7 +19,7 @@
 #define EXIT_SHELL 2
 #define PERM_DENIED "Permission denied"
 #define NOT_FOUND "not found"
-
+void removeSpaces(char *str);
 void reverse(char *str, int len);
 int intToStr(int x, char str[]);
 void _puts(char *str);

@@ -44,5 +44,9 @@ char **ParseCommand(char *command, char *separator)
 		i++;
 	}
 	param[i] = NULL;
+
+	for (i = 0; param[i] != NULL; i++)
+		removeSpaces(param[i]);
+
 	return (param);
 }
