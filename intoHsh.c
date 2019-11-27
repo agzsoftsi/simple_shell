@@ -48,7 +48,7 @@ void intoHsh(char **env, char **argv)
 		_prompt();
 	}
 	if (isatty(fileno(stdin)))
-		printf("Done!\n");
+	/*	printf("Done!\n");*/
 	free(command);
 	if (status != 0)
 		exit(status);
