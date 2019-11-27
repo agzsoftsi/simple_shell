@@ -65,10 +65,10 @@ int BuiltExit(char *command)
 {
 	char *comm;
 
-	comm = strdup(command);
+	comm = _strdup(command);
 	removeSpaces(comm);
 
-	if (strlen(comm) > 1)
+	if (_strlen(comm) > 1)
 	{
 		if (_strcmp(comm, "exit\n") == 0)
 		{
