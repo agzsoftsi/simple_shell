@@ -12,11 +12,8 @@ void errors(char *program, char *param, char *message, int Qexe)
 
 	char buf[256];
 	char sint[11];
-	int i;
 
-	UNUSED(i);
-
-	i = intToStr(Qexe, sint);
+	intToStr(Qexe, sint);
 
 	_strcpy(buf, program);
 	_strcat(buf, ": ");

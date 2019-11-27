@@ -14,7 +14,6 @@ int main(int argc, char *argv[], char **env)
 	FILE *stdin;
 	FILE *stdout;
 
-	UNUSED(env);
 
 	if (argc == 1)
 	{

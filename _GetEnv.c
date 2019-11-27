@@ -15,7 +15,6 @@ char *_GetEnv(char *var, char **env)
 
 	len = _strlen(var);
 
-	UNUSED(enviroment);
 	for (enviroment = env; *env != NULL; env++)
 	{
 		if (_strncmp(var, *env, len) == 0)
@@ -24,6 +23,7 @@ char *_GetEnv(char *var, char **env)
 			ValuePos++;
 			break;
 		}
+	*enviroment = *env;
 	}
 return (ValuePos);
 }

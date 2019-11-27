@@ -6,13 +6,12 @@
  **/
 void _printenv(char **env)
 {
-	char **enviroment;
-	char *isEnv;
+	char **isEnv;
 
-	UNUSED(enviroment);
-	for (enviroment = env; *env != NULL; env++)
+
+	for (isEnv = env; *env != NULL; env++)
 	{
-		isEnv = *env;
-		_puts(isEnv);
+		*isEnv = *env;
+		_puts(*isEnv);
 	}
 }
