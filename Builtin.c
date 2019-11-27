@@ -63,10 +63,19 @@ return (BuiltExit(command));
 
 int BuiltExit(char *command)
 {
-	if (_strcmp(command, "exit\n") == 0)
-	{
+	char *comm;
 
-		return (2); /*exit(0);*/
+	comm = strdup(command);
+	removeSpaces(comm);
+
+	if (strlen(comm) > 1)
+	{
+		if (_strcmp(comm, "exit\n") == 0)
+		{
+			free(comm);
+			return (2); /*exit(0);*/
+		}
 	}
+	free(comm);
 return (0);
 }
