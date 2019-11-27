@@ -10,10 +10,23 @@
 void errors(char *program, char *param, char *message, int Qexe)
 {
 
-	UNUSED(program);
-	UNUSED(param);
-	UNUSED(message);
-	UNUSED(Qexe);
-	perror("Error");
+	char buf[256];
+	char sint[11];
+	int i;
+
+	UNUSED(i);
+
+	i = intToStr(Qexe, sint);
+
+	_strcpy(buf, program);
+	_strcat(buf, ": ");
+	_strcat(buf, sint);
+	_strcat(buf, ": ");
+	_strcat(buf, param);
+	_strcat(buf, ": ");
+	_strcat(buf, message);
+	_strcat(buf, "\n");
+
+	write(STDERR_FILENO, &buf, _strlen(buf));
 
 }

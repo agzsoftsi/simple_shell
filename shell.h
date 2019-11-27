@@ -15,11 +15,16 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <sys/stat.h>
+#include <limits.h>
 #define UNUSED(argc)(void)(argc)
 #define CHANGE_DIR 1
 #define EXIT_SHELL 2
 #define PERM_DENIED "Permission denied"
 #define NOT_FOUND "not found"
+
+void reverse(char *str, int len);
+int intToStr(int x, char str[]);
+void _puts(char *str);
 void errors(char *program, char *param, char *message, int Qexe);
 void intoHsh(char **env, char **argv);
 char **ParseCommand(char *command, char *separator);
