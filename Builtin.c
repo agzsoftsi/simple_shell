@@ -65,7 +65,7 @@ int BuiltExit(char *command)
 {
 	if (_strcmp(command, "exit\n") == 0)
 	{
-		printf("Done!\n");
+
 		return (2); /*exit(0);*/
 	}
 return (0);

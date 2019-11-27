@@ -39,4 +39,5 @@ int _Wait(char **argv, char *command, int QExecutes);
 int BuiltExit(char *command);
 int _strlen(char *s);
 int _strncmp(char *s1, char *s2, int n);
+int _putchar(char c);
 #endif

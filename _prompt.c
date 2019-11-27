@@ -7,15 +7,15 @@ void _prompt(void)
 {
 	if (isatty(fileno(stdin)))
 	{
-		putchar('[');
-		putchar('C');
-		putchar('I');
-		putchar('S');
-		putchar('H');
-		putchar('E');
-		putchar('L');
-		putchar('L');
-		putchar('$');
-		putchar(']');
+		_putchar('[');
+		_putchar('C');
+		_putchar('I');
+		_putchar('S');
+		_putchar('H');
+		_putchar('E');
+		_putchar('L');
+		_putchar('L');
+		_putchar('$');
+		_putchar(']');
 	}
 }
