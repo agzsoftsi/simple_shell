@@ -66,6 +66,16 @@ void execute(char *command, char **env)
 {
 	char **param;
 	int indEx = 0;
+	char *comm;
+
+	comm = strdup(command);
+	removeSpaces(comm);
+	if (_strlen(comm) == 1)
+	{
+		free(comm);
+		_exit(0);
+	}
+	free(comm);
 
 	param = ParseCommand(command, " ");
 	if (param != NULL)
