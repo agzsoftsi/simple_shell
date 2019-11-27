@@ -5,7 +5,7 @@
  **/
 void _prompt(void)
 {
-	if (isatty(fileno(stdin)))
+	if (isatty(STDIN_FILENO))
 	{
 		_putchar('[');
 		_putchar('C');

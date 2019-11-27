@@ -10,10 +10,6 @@
  **/
 int main(int argc, char *argv[], char **env)
 {
-	FILE *stderr;
-	FILE *stdin;
-	FILE *stdout;
-
 
 	if (argc == 1)
 	{
