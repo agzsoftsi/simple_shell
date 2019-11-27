@@ -10,9 +10,9 @@ void _printenv(char **env)
 	char *isEnv;
 
 	UNUSED(enviroment);
+	UNUSED(isEnv);
 	for (enviroment = env; *env != NULL; env++)
 	{
 	isEnv = *env;
-		printf("%s\n", isEnv);
 	}
 }
