@@ -34,11 +34,12 @@ int _path(char **param, char **env)
 			break;
 
 		}
-		if (stat(param[0], &st) == 0)
-		{
-			break;
-
-		}
+		/**
+		*if (stat(param[0], &st) == 0)
+		*{
+		*	break;
+		*}
+		*/
 		_strcpy(path1, "");
 	}
 	if (Directories[i] == NULL)
