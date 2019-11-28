@@ -1,9 +1,18 @@
 # CISHELL v1.0
 ![Logo CISHELL](LogoShell.jpg)
 
-CISHELL v1.0 is a basic UNIX command interpreter
+### Description
+CISHELL v1.0 is a basic UNIX command interpreter, that read, interprets, and execute a command if its exist
 
+### Builtins
+|command | INFORMATION |
+| ------ | ------ |
+| env | display environment variables |
+| cd | change current directory |
+| exit | terminate the shell |
 
+### General Flowchart
+![Flowchartshell](flowcharshell.jpg)
 
 # Requirements
 ### General
@@ -87,16 +96,7 @@ hsh main.c shell.c test_ls_2
 $
 ```
 
-| FILES | INFORMATION |
-| ------ | ------ |
-| README.md | [plugins/dropbox/README.md][PlDb] |
-| AUTHORS | [plugins/github/README.md][PlGh] |
-| man_1_simple_shell | [plugins/googledrive/README.md][PlGd] |
-| cishell.h | [plugins/onedrive/README.md][PlOd] |
-| cishell.c | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
-
 ### Authors
 
 > Carlos Andres Garcia Morales - @kargarmor
-> Ivan Dario Lasso Gil - @ilasso [link]
+> Ivan Dario Lasso Gil - @ilasso 
