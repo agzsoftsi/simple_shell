@@ -96,6 +96,26 @@ hsh main.c shell.c test_ls_2
 $
 ```
 
+###Examples
+```sh
+[CISHELL$]ls
+hsh shell.c shell.h test_ls_2
+[CISHELL$]
+```
+
+```sh
+[CISHELL$]ls -l
+-rwx-rwx -rwx 1 vagrant vagrant   200 nov 25 18:52 hsh
+-rx--rw---rw- 1 vagrant vagrant  8210 nov 25 20:53 shell.h
+-rx--rw---rw- 1 vagrant vagrant  8210 nov 25 20:53 shell.h
+[CISHELL$]
+```
+
+```sh
+[CISHELL$]pwd
+/home/vagrant/simple_shell
+[CISHELL$]
+```
 ### Authors
 
 > Carlos Andres Garcia Morales - @kargarmor
