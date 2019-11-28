@@ -1,115 +1,150 @@
 .TH CISHELL v.1 "22 November 2019" "0.1" "CISHELL man page"
 .SH NAME
-.B CISHELL, hsh - a command language interpreter
+.B CISHELL, hsh - a simple command interpreter
 .SH SYNOPSIS
 .IP
-.I hsh [command] [arg]
-.IP LIBRARIES
-.IP #include '<stdio.h>'
-.IP #include "<string.h>"
-.IP #include "<unistd.h>"
-.IP #include "<stdlib.h>"
-.IP #include "<sys/types.h>"
-.IP #include "<sys/wait.h>"
-.IP #include "<errno.h>"
-.IP #include "<sys/stat.h>"
+.I ./hsh [command] [arg]
+
+.I LIBRARIES
+\fb #include <stdio.h>
+\fb #include <string.h>
+\fb #include <unistd.h>
+\fb #include <stdlib.h>
+\fb #include <sys/types.h>
+\fb #include <sys/wait.h>
+\fb #include <errno.h>
+\fb #include <sys/stat.h>
+
+.I MACROS
+\fb #define CHANGE_DIR 1
+\fb #define EXIT_SHELL 2
+\fb #define PERM_DENIED "Permission denied"
+\fb #define NOT_FOUND "not found"
+
+.I PROTOTYPES
+\fb void removeSpaces(char *str);
+\fb void reverse(char *str, int len);
+\fb int intToStr(int x, char str[]);
+\fb void _puts(char *str);
+\fb void errors(char *program, char *param, char *message, int Qexe);
+\fb void intoHsh(char **env, char **argv);
+\fb char **ParseCommand(char *command, char *separator);
+\fb void _prompt(void);
+\fb int _exec(char **param, char **env);
+\fb void _printenv(char **env);
+\fb int Builtin(char *command, char **env);
+\fb char *_GetEnv(char *var, char **env);
+\fb int _path(char **param, char **env);
+\fb void execute(char *command, char **env);
+\fb char *_strcpy(char *dest, char *src);
+\fb char *_strcat(char *dest, char *src);
+\fb char *_strdup(char *str);
+\fb char *_strchr(char *s, char c);
+\fb int _strcmp(char *s1, char *s2);
+\fb int _Wait(char **argv, char *command, int QExecutes);
+\fb int BuiltExit(char *command);
+\fb int _strlen(char *s);
+\fb int _strncmp(char *s1, char *s2, int n);
+\fb int _putchar(char c);
 
 .SH DESCRIPTION
-CISHELL (hsh) replicates the command language interpreter (sh) and executes commands read from the standard input or from a file.\
+CISHELL is a simple command interpreter like a (sh) and executes commands read from the standard input or from a file.\
 
 
 .SH OVERVIEW
-CISHELL (hsh) is a command that reads lines from either a file or the terminal, interprets them, and generally executes the commands.\
-It is a program that is running when the user compiles CISHELL (simple_shell) and runs the executable file, ./hsh. \
-CISHELL implements a language that has flow control constructs, steering the computer to execute the commands. It incorporates\
-features for interactive use and has the advantage of being in non-interactive mode, allowing the user to pipe commands into hsh such as echo "ls" | ./hsh\
-That is, commands can be typed directly to the running shell or can be put into a file and the file can be executed directly by the shell.
+CISHELL is a simple shell that reads lines from terminal prompt or file, interprets them, and executes the commands if are corrects.\
+CISHELL starts when run the executable file, ./hsh. CISHELL implements a language that has flow control constructs, steering the computer to execute the commands.
+ It incorporates, features for interactive use and has the advantage of being in non-interactive mode, allowing the user to pipe commands into hsh such as echo "l
+s" | ./hsh, That is, commands can be typed directly to the running shell or can be put into a file and the file can be executed directly by the shell.
 
-.SH INVOCATION
-To start up CISHELL, you must first compile with gcc -Wall -Werror -Wextra -pedantic *.c -o hsh and run the executable ./hsh.
-If no arguments are present and if the standard input of the shell is connected to a terminal, the shell is considered in interactive mode .
-CISHELL is designed to interact in Linux or a Unix like system since the shell uses the Linux system calls to retrieve and execute executable programs found in the $PATH. Our version of the shell incorporates the builtin commands "exit" and "env" and "cd".
-.SH BUILT-IN COMMANDS
-This secion has information on the included builtin commands incorporated into CISHELL
-.IP env
-writes the current environment to standard output
-.IP setenv
-sets a new environmental variable or modifies an existing one to the environment
-.IP exit
-terminates CISHELL's processes
-.IP cd
-change the shell working directory
-.SH EXAMPLE OF EXECUTABLE
+.SH EXECUTION
+To run CISHELL, you must first compile with " gcc -Wall -Werror -Wextra -pedantic *.c -o hsh " and run the executable ./hsh.
+If there are no arguments present and if the standard input of the shell is connected to a terminal, the shell is in interactive mode .
+CISHELL is designed to work in Linux or a Unix like system and give access to the shell to use the Linux system calls to retrieve and execute executable programs
+found in the $PATH. CISHELL incorporates the builtin commands "exit" and "env" and "cd".
+
+
+.SH BUILTIN COMMANDS
+Here there is an information about the builtin commands into CISHELL
+
+.I env
+
+display the environment to standard output
+
+.I exit
+
+finish CISHELL's processes
+
+.I cd
+
+change working directory
+
+
+.SH EXAMPLE OF EXTERNAL COMMANDS
+
 Here is an example use of the "ls" command in CISHELL:
-.IP
-.br
-.\&
-.RS 1.5i
-\&$ ls -l
-.br
-total 3
-.br
-\&-rwxrw-r-x 1 vagrant vagrant 5345 Apr 4 14:59 hello.c
-.br
-\&-rwxrwxrwx 1 vagrant vagrant 5343 Mar 1 22:05 julien.c
-.br
-\&-rwxrw-r-x 1 vagrant vagrant 5542 Feb 2 09:14 holberton.c
+
+
+.I SIMPLE FORM - ONLY COMMAND
+
+.B [CISHELL$]ls
+\fb AUTHORS    _exec.c    intoHsh.c      man_1_simple_shell  _printenv.c  README.md       shell.h           Str_functions.c
+\fb Builtin.c  _GetEnv.c  _IntToStr.c    ParseCommand.c      _prompt.c    removeSpaces.c  _strcmp.c
+\fb errors.c   hsh        LogoShell.jpg  _path.c             _puts.c      shell.c         Str_functions2.c
+
+.I LONG FORM - COMMAND WITH ARGUMENTS
+
+.B [CISHELL$]ls -l
+\fb total 132
+\fb -rw-r--r-- 1 root root   200 Nov 27 22:42 AUTHORS
+\fb -rw-r--r-- 1 root root  1497 Nov 27 22:42 Builtin.c
+\fb -rw-r--r-- 1 root root   580 Nov 27 22:42 errors.c
+\fb -rw-r--r-- 1 root root   637 Nov 27 22:56 _exec.c
+\fb -rw-r--r-- 1 root root   540 Nov 27 22:42 _GetEnv.c
+\fb -rwxr-xr-x 1 root root 19059 Nov 28 01:17 hsh
+\fb -rw-r--r-- 1 root root  2624 Nov 27 22:56 intoHsh.c
+\fb -rw-r--r-- 1 root root  1040 Nov 27 22:42 _IntToStr.c
+
+
 .SH EXAMPLE OF BUILTIN
-Here is an example of the builtin function, "env", example does not show LS_COLORS on purpose:
-.IP
-.br
-.\&
-.RS 1.5i
-\&$ env
-.br
-XDG_SESSION_ID=87
-.br
-TERM=xterm-256color
-.br
-SHELL=/bin/bash
-.br
-SSH_CLIENT=10.0.2.2 57931 22
-.br
-OLDPWD=/home/vagrant
-.br
-SSH_TTY=/dev/pts/2
-.br
-USER=vagrant
-.br
-MAIL=/var/mail/vagrant
-.br
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-.br
-PWD=/home/vagrant/simple_shell/simple_shell
-.br
-LANG=en_US.UTF-8
-.br
-SHLVL=1
-.br
-HOME=/home/vagrant
-.br
-LOGNAME=vagrant
-.br
-SSH_CONNECTION=10.0.2.2 57931 10.0.2.15 22
-.br
-LESSOPEN=| /usr/bin/lesspipe %s
-.br
-XDG_RUNTIME_DIR=/run/user/1000
-.br
-LESSCLOSE=/usr/bin/lesspipe %s %s
-.br
-_=/usr/bin/env
-.br
+Here is an example of the builtin function, "env":
+
+.I ENVIRONMENT VARIABLE (env)
+
+.B [CISHELL$]env
+
+\fb SHELL=/bin/bash
+\fb TERM=cygwin
+\fb USER=root
+\fb LS_COLORS=rs=0:*.wav=00;36:*.axa=00;36:*.oga=00;36:*.spx=00;36:*.xspf=00;36:
+\fb SUDO_USER=vagrant
+\fb SUDO_UID=1000
+\fb USERNAME=root
+\fb MAIL=/var/mail/root
+\fb PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+\fb PWD=/root/copyss271119/simple_shell
+\fb LANG=en_US.UTF-8
+\fb SHLVL=1
+\fb SUDO_COMMAND=/bin/bash
+\fb HOME=/root
+\fb LOGNAME=root
+\fb LESSOPEN=| /usr/bin/lesspipe %s
+\fb SUDO_GID=1000
+\fb LESSCLOSE=/usr/bin/lesspipe %s %s
+\fb _=./hsh
+\fb OLDPWD=/root/copyss271119
+
 
 .SH "SEE ALSO"
 .BR sh (1)
 
-.SH REFERENCES
-This man page references the dash shell man page as it is well written.
 
 .SH BUGS
 No known bugs.
-.SH DEVELOPER(s) NOTES
-Other builtins such as alias, history, and command seperators are currently in development.
+
+
 .SH AUTHORS
-Carlos Andres Garcias, Ivan Dario Lasso
+
+Carlos Andres Garcias Morales- 1172@holbertonschool.com
+
+Ivan Dario Lasso Gil - ivan-dario.lasso-gil@holbertonschool.com
