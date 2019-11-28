@@ -19,6 +19,7 @@
 #define EXIT_SHELL 2
 #define PERM_DENIED "Permission denied"
 #define NOT_FOUND "not found"
+int _atoi(char *s);
 void removeSpaces(char *str);
 void reverse(char *str, int len);
 int intToStr(int x, char str[]);

@@ -1,5 +1,4 @@
 #include "shell.h"
-int BuiltExit(char *command);
 /**
  * Builtin - Evaluate Buitins
  * @command:  line of command
@@ -16,16 +15,13 @@ int Builtin(char *command, char **env)
 	static int countAlloc;
 
 	if (_strncmp(command, "cd", 2) == 0)
-	{
-		cdCommand = ParseCommand(command, " ");
+	{	cdCommand = ParseCommand(command, " ");
 		if (_strncmp(cdCommand[0], "cd", 2) == 0)
 		{
 			if ((cdCommand[1] == NULL) || (_strncmp(cdCommand[1], "-", 1) == 0))
 			{
 				if (cdCommand[1] == NULL)
-				{
 					cdCommand[1] = _GetEnv("HOME", env);
-				}
 				else
 				{
 					if (_strncmp(cdCommand[1], "-", 1) == 0)
@@ -43,7 +39,6 @@ int Builtin(char *command, char **env)
 				perror("Error <getcwd>");
 			else
 				countAlloc++;
-
 			if (chdir(cdCommand[1]))
 				perror("Error:<chdir>");
 		}
@@ -51,31 +46,5 @@ int Builtin(char *command, char **env)
 		_prompt();
 		return (1);
 	} /*CD LOGICAL*/
-
 return (BuiltExit(command));
-}
-/**
- * BuiltExit - Evaluate Exit Buitin
- * @command:  line of command
- * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
- * Return: 2 EXIT DONE, 0 NOT EXIT
- **/
-
-int BuiltExit(char *command)
-{
-	char *comm;
-
-	comm = _strdup(command);
-	removeSpaces(comm);
-
-	if (_strlen(comm) > 1)
-	{
-		if (_strcmp(comm, "exit\n") == 0)
-		{
-			free(comm);
-			return (2); /*exit(0);*/
-		}
-	}
-	free(comm);
-return (0);
 }
