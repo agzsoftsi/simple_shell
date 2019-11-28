@@ -96,7 +96,7 @@ hsh main.c shell.c test_ls_2
 $
 ```
 
-###Examples
+### Examples
 ```sh
 [CISHELL$]ls
 hsh shell.c shell.h test_ls_2
