@@ -2,11 +2,12 @@
 /**
  * BuiltExit - Evaluate Exit Buitin
  * @command:  line of command
+ * @status:  status process
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  * Return: 2 EXIT DONE, 0 NOT EXIT
  **/
 
-int BuiltExit(char *command)
+int BuiltExit(char *command, int status)
 {
 	char *comm;
 	char **ExitStatus;
@@ -22,10 +23,11 @@ int BuiltExit(char *command)
 			ExitStatus = ParseCommand(command, " ");
 			if (ExitStatus[1] == NULL)
 			{
+				exitcode = status;
 				free(command);
 				free(ExitStatus);
 				free(comm);
-				exit(0);
+				exit(exitcode);
 			}
 			removeSpaces(ExitStatus[1]);
 			exitcode = _atoi(ExitStatus[1]);

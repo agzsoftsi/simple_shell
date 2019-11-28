@@ -12,7 +12,7 @@ void intoHsh(char **env, char **argv)
 	char *command = NULL;
 	pid_t pid;
 	int indBuilt = 0;
-	int status = 0;
+	static int status;
 	static int Qexecutes = 1;
 	ssize_t QcharComm;
 
@@ -22,7 +22,7 @@ void intoHsh(char **env, char **argv)
 	{
 		if (_strcmp(command, "\n") != 0)
 		{
-			indBuilt = Builtin(command, env);
+			indBuilt = Builtin(command, env, status);
 			if (indBuilt == CHANGE_DIR)
 			{	free(command);
 				command = NULL;

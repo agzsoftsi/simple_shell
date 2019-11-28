@@ -3,10 +3,11 @@
  * Builtin - Evaluate Buitins
  * @command:  line of command
  * @env: var enviroments
+ * @status: status process
  * Return: 1 CD DONE, 2 EXIT DONE, 0 NO ONE
  * Authors - Carlos Garcia - Ivan Dario Lasso - Cohort 10 - Cali
  **/
-int Builtin(char *command, char **env)
+int Builtin(char *command, char **env, int status)
 {
 	char **cdCommand = NULL;
 	size_t sizeDirBuf = 512;
@@ -46,5 +47,5 @@ int Builtin(char *command, char **env)
 		_prompt();
 		return (1);
 	} /*CD LOGICAL*/
-return (BuiltExit(command));
+return (BuiltExit(command, status));
 }
